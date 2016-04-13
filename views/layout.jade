@@ -3,16 +3,34 @@ html
   head
   title Title
 
+  meta(charset='utf-8')
   meta(name='viewport', content='width=device-width, initial-scale=1')
 
   link(rel='stylesheet', type='text/css', href='css/plugins.min.css')
+  link(rel='stylesheet', type='text/css', href='css/style.min.css')
   block styles
 
   body
-  block content
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        a.navbar-brand(href='/') Bio-Shop
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='#') Tietoa meistä
+          li
+            a(href='#') Palvelut
+          li
+            a(href='#') Henkilökunta
+          li
+            a(href='#') Hinnasto
+          li
+            a(href='#') Ota yhteyttä
+          li
+            a(href='https://www.facebook.com/Ikinuori')
+              i.mdi.mdi-facebook-box
+
+    block content
 
   script(type='text/javascript', src='js/plugins.min.js')
   block scripts
 
-  .sadasdas
-    h1 Hjksjdhasdkasdasdasd
