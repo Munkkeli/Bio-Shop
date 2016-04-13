@@ -93,7 +93,7 @@ gulp.task('assets', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.less, ['less']);
   gulp.watch(paths.js, ['js']);
-  gulp.watch(paths.views, ['views']);
+  gulp.watch(['./views/*.jade'], ['views']);
 });
 
 gulp.task('default', ['less', 'js', 'views', 'plugins', 'css', 'fonts', 'images', 'assets']);
