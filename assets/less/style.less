@@ -1,37 +1,81 @@
-@color-main: #333;
-@header-height: 60px;
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+@color-main: #c2ce3c;
 
 body, html {
-	background-color:rgb(194,206,60);
-	margin: 0;
+  margin: 0;
 }
 
-header {
-	height: @header-height;
+.navbar {
+  letter-spacing: 2px;
+  font-family: 'Montserrat', sans-serif;
+  background: @color-main;
+  box-shadow: none;
+  border: none;
+
+  .navbar-brand {
+    text-shadow: none;
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .nav li {
+    &.icon {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      font-size: 1.5em;
+
+      i {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &:hover {
+      background: #fff;
+      
+      a {
+        color: @color-main;
+      }
+    }
+
+    a {
+      font-size: 0.8em;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: none;
+      color: #fff;
+    }
+  }
 }
 
 .content {
-	&.wide {
-		color: @color-main;
-	}
+  &.wide {
+    color: @color-main;
+  }
 
-	img {
-		background: #fff;
-	}
+  img {
+    background: #fff;
+  }
 }
 
 .jumbotron {
-      background-color: #c2ce3c;
-      color: #fff;
-      padding: 100px 25px;
-      margin-bottom: 0px !important;
-      font-family:sans-serif;
-  }
+  background-color: @color-main;
+  color: #fff;
+  padding: 100px 25px;
+  margin-bottom: 0px !important;
+  font-family:sans-serif;
+}
 
 .container-fluid {
-      padding: 60px 50px;
-  }
+  padding: 60px 50px;
+}
 
 .bg-grey {
-      background-color: #f6f6f6;
-  }
+  background-color: #f6f6f6;
+}
