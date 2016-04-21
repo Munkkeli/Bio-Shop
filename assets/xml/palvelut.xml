@@ -1,0 +1,9 @@
+<?xml version='1.0' standalone='yes'?>
+<nappulat>
+  <kategoria name="Osteopatia ja hieronta">
+    <palvelu name="Klassinen osteopatia">
+      <hinta> 10€ </hinta>
+      <hoitajat> Ilpo </hoitajat>
+    </palvelu>
+  </kategoria>
+</nappulat>

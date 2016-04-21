@@ -1,0 +1,42 @@
+doctype html
+html
+    head
+    title Hallinta
+
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+
+    link(rel='stylesheet', type='text/css', href='css/plugins.min.css')
+    link(rel='stylesheet', type='text/css', href='css/style.min.css')
+    link(rel='stylesheet', tpye='text/css', href='css/simple-sidebar.min.css')
+
+  
+
+
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
+    script(type='text/javascript', src='js/plugins.min.js')
+
+body
+    - include 'php/control.php'
+    #wrapper
+        #sidebar-wrapper
+            ul.sidebar-nav
+                li.sidebar-brand
+                    a(href='#') Hallintapaneeli
+                li
+                    a(href='#') Etusivu
+                li
+                    a(href='#') Palvelut
+                li
+                    a(href='#') Tapahtumat
+                li
+                    a(href='#') Hoitajat
+        #page-content-wrapper
+            div.container-fluid
+                div.row
+                    div.col-lg-12
+                        h1 Hoitajien muokkauspaneeli   
+                        - hoitajaNappi();
+                        - listHoitajas();
+
+
