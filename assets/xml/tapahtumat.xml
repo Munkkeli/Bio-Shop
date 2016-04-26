@@ -1,10 +1,10 @@
 <?xml version='1.0' standalone='yes'?>
 <tapahtumat>
-<tapahtuma>
+<tapahtuma id="1">
 	<title>makkara</title>
 	<content>halvalla</content>
 </tapahtuma>
-<tapahtuma>
+<tapahtuma id="2">
 	<title>sinappia</title>
 	<content>halvalla</content>
 </tapahtuma>
