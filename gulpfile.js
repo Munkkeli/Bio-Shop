@@ -33,7 +33,7 @@ var paths = {
 	plugins: ['./assets/js/plugins/*.js'],
 	css: ['./assets/css/*.css'],
 	fonts: ['./assets/fonts/*.*'],
-  images: ['./assets/images/*.*'],
+  images: ['./assets/images/**/*'],
   assets: ['./assets/*.*']
 };
 
@@ -106,6 +106,7 @@ gulp.task('assets', function() {
 
 gulp.task('watch', function() {
   gulp.watch(paths.less, ['less']);
+  gulp.watch(paths.php, ['php']);
   gulp.watch(paths.js, ['js']);
   gulp.watch(['./views/*.jade'], ['views']);
 });

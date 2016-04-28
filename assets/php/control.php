@@ -46,6 +46,32 @@
 	    		}
     		}
 
+    	if ($_POST["section"] == "palvelu"){
+			if (isset($_POST["id"]) && !empty($_POST["id"])){
+		    		
+		    		if ($_POST["action"] == "delete"){
+		    			deletePalvelu($_POST["id"]);
+		    			echo "poistettu!";
+		    			echo $_POST["id"];
+		    		}
+
+		    		if ($_POST["action"] == "update"){
+			    		updatePalvelu($_POST["id"],$_POST["nappiid"],$_POST["palvelu"],$_POST["kuvaus"],$_POST["hinta"],$_POST["hoitaja"]);
+			    		echo "updating";
+		    		}
+
+	    		}
+
+	    		if ($_POST["action"] == "add"){
+	    			echo "lisätään...";
+	    			print_r($_POST);
+	    			addPalvelu($_POST["nappiid"],$_POST["palvelu"],$_POST["kuvaus"],$_POST["hinta"],$_POST["hoitaja"]);
+	    		}
+    		}
+
+
+
+
 	}
 
 	function uploadImage(){
@@ -170,23 +196,84 @@
 	function listPalvelus(){
 		$xml = simplexml_load_file('xml/palvelut.xml');
 
-		foreach($xml->tapahtuma as $t)
+		foreach($xml->kategoria as $k)
 		{ 
-		    echo $t->title;
-		    echo $t->content;
+			echo "<h2>" . $k["name"] . "</h2>";
+			$nappiId = $k["id"];
+		    foreach($k->palvelu as $p)
+		    {
+		    	echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input><input type="hidden" name="action" value="update"> </input><input type="hidden" name="id" value="'. $p["id"] .'"></input><input type="hidden" name="nappiid" value="'. $nappiId .'"></input><input type="field" name="palvelu" value="'. $p["nimi"] .'"></input><input type="field" name="kuvaus" value="'. $p->kuvaus .'"></input><input type="field" name="hinta" value="'. $p->hinta .'"></input><input type="field" name="hoitaja" value="'. $p->hoitajat .'"></input><input type="submit" value="Päivitä"></input></form> </br>';
+		    	echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input> <input type="hidden" name="id" value="'. $p["id"] .'"> </input><input type="hidden" name="nappiid" value="'. $nappiId .'"></input><input type="hidden" name="action" value="delete"></input><input type="submit" value="Poista"></input></form>';
+		    }
+		    echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input><input type="hidden" name="action" value="add"> <input type="hidden" name="nappiid" value="'. $nappiId .'"</input><input type="field" name="palvelu" placeholder="Palvelun nimi"></input><input type="field" name="kuvaus" placeholder="Palvelun kuvaus"></input><input type="field" name="hinta" placeholder="Palvelun hinta"></input><input type="field" name="hoitaja" placeholder="Palvelun hoitaja"><input type="submit" value="Lisää"></input></form> </br>';
 	 	}
 	}
 
-	function addPalvelu(){
+	function addPalvelu($nappiId, $nimi, $kuvaus, $hinta, $hoitaja) {
+		$id = uniqid();
 
+		$kategoriat = simplexml_load_file('xml/palvelut.xml');
+		foreach($kategoriat->kategoria as $kfound)
+		{
+			if($kfound["id"] == $nappiId)
+			{
+				$palvelu = $kfound->addChild("palvelu");
+				$palvelu->addAttribute('nimi', $nimi);
+				$palvelu->addAttribute('id', $id);
+				$palvelu->addChild('kuvaus',$kuvaus);
+				$palvelu->addChild('hinta',$hinta);
+				$palvelu->addChild('hoitajat',$hoitaja);
+
+
+				$content = $kategoriat->asXml();
+				file_put_contents("xml/palvelut.xml", $content);
+			}
+		}
 	}
 
-	function updatePalvelu(){
+	function updatePalvelu($id,$nappiId,$nimi,$kuvaus,$hinta,$hoitaja){
+		$kategoriat = simplexml_load_file('xml/palvelut.xml');
+		foreach($kategoriat->kategoria as $kfound)
+		{
+			if($kfound["id"] == $nappiId)
+			{
+				foreach($kfound->palvelu as $pfound)
+				{
+					if($pfound["id"] == $id)
+					{
+						$pfound["nimi"] = $nimi;
+						$pfound->kuvaus = $kuvaus;
+						$pfound->hinta = $hinta;
+						$pfound->hoitajat = $hoitaja;
+					}
+				}
 
+			}
+		}
+
+		$content = $kategoriat->asXml();
+		file_put_contents("xml/palvelut.xml", $content);
 	}
 
-	function deletePalvelu(){
+	function deletePalvelu($nappiId,$id){
+		$xml = simplexml_load_file('xml/tapahtumat.xml');
 
+		foreach($xml->kategoria as $kfound){ 
+			if ($kfound["id"] == $nappiId){
+				foreach($kid->palvelu as $pfound)
+				{
+					if ($pfound["id"] == $id)
+					{
+						$dom = dom_import_simplexml($found);
+						$dom->parentNode->removeChild($dom); 
+					}
+				}
+			}
+		}
+
+		$content = $xml->asXml();
+
+		file_put_contents("xml/palvelut.xml", $content);
 	}
 
     // Tapahtuma functions
