@@ -1,0 +1,12 @@
+<FilesMatch "(admin|router).php">
+  AuthName "Admin Only"
+  AuthType Basic
+  AuthUserFile /xampp/htdocs/build/.htpasswd
+  require valid-user
+</FilesMatch>
+
+<FilesMatch ".htpasswd">
+  Satisfy all
+  Order deny,allow
+  Deny from all
+</FilesMatch>

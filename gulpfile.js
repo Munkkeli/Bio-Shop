@@ -25,16 +25,18 @@ var banner = ['/**',
 var destination = './build';
 
 var paths = {
-  xml: ['./assets/xml/*.xml'],
-  php: ['./assets/php/*.php'],
+  xml: ['./assets/xml/*.xml', './assets/xml/.htaccess'],
+  php: ['./assets/php/*.php','./assets/php/.htaccess'],
 	less: ['./assets/less/*.less'],
 	js: ['./assets/js/*.js'],
   views: ['./views/*.jade', '!./views/layout.jade'],
+  routes: ['./views/*.php'],
 	plugins: ['./assets/js/plugins/*.js'],
 	css: ['./assets/css/*.css'],
 	fonts: ['./assets/fonts/*.*'],
   images: ['./assets/images/**/*'],
-  assets: ['./assets/*.*']
+  assets: ['./assets/*.*'],
+  apache: ['./.htaccess', './.htpasswd'],
 };
 
 gulp.task('xml', function() {
@@ -77,6 +79,11 @@ gulp.task('views', function() {
     .pipe(gulp.dest(destination))
 });
 
+gulp.task('routes', function() {
+  gulp.src(paths.routes)
+    .pipe(gulp.dest(destination))
+});
+
 gulp.task('plugins', function() {
   return gulp.src(paths.plugins)
   	.pipe(concat('plugins.min.js'))
@@ -104,12 +111,18 @@ gulp.task('assets', function() {
     .pipe(gulp.dest(destination));
 });
 
+gulp.task('apache', function() {
+  return gulp.src(paths.apache)
+    .pipe(gulp.dest(destination));
+});
+
 gulp.task('watch', function() {
   gulp.watch(paths.less, ['less']);
   gulp.watch(paths.php, ['php']);
   gulp.watch(paths.js, ['js']);
   gulp.watch(['./views/*.jade'], ['views']);
+  gulp.watch(paths.routes, ['routes']);
 });
 
 
-gulp.task('default', ['xml','php','less', 'js', 'views', 'plugins', 'css', 'fonts', 'images', 'assets']);
+gulp.task('default', ['xml','php','less', 'js', 'views', 'routes', 'plugins', 'css', 'fonts', 'images', 'assets', 'apache']);

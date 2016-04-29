@@ -4,6 +4,8 @@ block styles
 
 
 block content
+    - include 'php/tables.php'
+
     div.jumbotron.text-center
         img(src='images/zen-logo-hd.png' style='width:30%;height:30%')
         p Terveyskauppa Bioshop Ikinuori
@@ -53,17 +55,17 @@ block content
 
     #tapahtumat.container-fluid.bg-grey
         h2 TAPAHTUMAT
-        - $xml = simplexml_load_file('xml/tapahtumat.xml');
-        - foreach ($xml->tapahtuma as $tapahtuma):
-            div.col-sm-12!= $tapahtuma->title;
-        - endforeach
+        - $tapahtumat = Tapahtuma::show();
+        - for ($x = 0; $x < $tapahtumat->count(); $x++):
+            div.col-sm-12!= $tapahtumat[$x]->nimi;
+        - endfor
 
 
         div.row.text-left
 
     #hoitajat.container-fluid.bg-grey
         h2 HOITAJAT
-        - $xml = simplexml_load_file('xml/hoitajat.xml');
-        - foreach ($xml->hoitaja as $hoitaja):
-            div.col-sm-1!= $hoitaja->name;
-        - endforeach
+        - $hoitajat = Hoitaja::show();
+        - for ($x = 0; $x < $hoitajat->count(); $x++):
+            div.col-sm-1!= $hoitajat[$x]->nimi;
+        - endfor

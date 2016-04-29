@@ -17,7 +17,7 @@ html
     script(type='text/javascript', src='js/plugins.min.js')
 
 body
-    - include 'php/control.php'
+    - include 'php/tables.php'
     #wrapper
         #sidebar-wrapper
             ul.sidebar-nav
@@ -36,14 +36,16 @@ body
                 div.row
                     div.col-lg-12
                         h1 Palveluiden muokkauspaneeli
-                        - listPalvelus();
+                        - echo Palvelu::form('update');
+                        - echo Palvelu::form('create');
 
                         h1 Tapahtumien muokkauspaneeli
-                        - listTapahtumas();
+                        - echo Tapahtuma::form('update');
+                        - echo Tapahtuma::form('create');
 
                         h1 Hoitajien muokkauspaneeli   
-                        - hoitajaNappi();
-                        - listHoitajas();
+                        - echo Hoitaja::form('update');
+                        - echo Hoitaja::form('create');
 
 
 

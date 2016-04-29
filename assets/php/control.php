@@ -1,79 +1,8 @@
 <?php
-	// sections, hoitaja
-	// actions, add update delete
-	if (isset($_POST["action"]) && !empty($_POST["action"])) {
-		if ($_POST["section"] == "hoitaja"){
-			if (isset($_POST["id"]) && !empty($_POST["id"])){
-		    		
-		    		if ($_POST["action"] == "delete"){
-		    			deleteHoitaja($_POST["id"]);
-		    			echo "poistettu!";
-		    			echo $_POST["id"];
-		    		}
 
-		    		if ($_POST["action"] == "update"){
-			    		updateHoitaja($_POST["id"],$_POST["nimi"],$_POST["kuvaus"],$_FILES["image"]);
-			    		echo "updating";
-		    		}
-
-	    		}
-
-	    		if ($_POST["action"] == "add"){
-	    			echo "lisätään...";
-	    			addHoitaja($_POST["nimi"],$_POST["kuvaus"],$_FILES["image"]);
-	    		}
-    		}
-
-    	if ($_POST["section"] == "tapahtuma"){
-			if (isset($_POST["id"]) && !empty($_POST["id"])){
-		    		
-		    		if ($_POST["action"] == "delete"){
-		    			deleteTapahtuma($_POST["id"]);
-		    			echo "poistettu!";
-		    			echo $_POST["id"];
-		    		}
-
-		    		if ($_POST["action"] == "update"){
-			    		updateTapahtuma($_POST["id"],$_POST["title"],$_POST["content"]);
-			    		echo "updating";
-		    		}
-
-	    		}
-
-	    		if ($_POST["action"] == "add"){
-	    			echo "lisätään...";
-	    			addTapahtuma($_POST["title"],$_POST["content"]);
-	    		}
-    		}
-
-    	if ($_POST["section"] == "palvelu"){
-			if (isset($_POST["id"]) && !empty($_POST["id"])){
-		    		
-		    		if ($_POST["action"] == "delete"){
-		    			deletePalvelu($_POST["id"]);
-		    			echo "poistettu!";
-		    			echo $_POST["id"];
-		    		}
-
-		    		if ($_POST["action"] == "update"){
-			    		updatePalvelu($_POST["id"],$_POST["nappiid"],$_POST["palvelu"],$_POST["kuvaus"],$_POST["hinta"],$_POST["hoitaja"]);
-			    		echo "updating";
-		    		}
-
-	    		}
-
-	    		if ($_POST["action"] == "add"){
-	    			echo "lisätään...";
-	    			print_r($_POST);
-	    			addPalvelu($_POST["nappiid"],$_POST["palvelu"],$_POST["kuvaus"],$_POST["hinta"],$_POST["hoitaja"]);
-	    		}
-    		}
-
-
-
-
-	}
-
+	/*
+			Old functions
+	 */
 	function uploadImage(){
 		$target_dir = "images/";
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -140,140 +69,19 @@
 	 	}
 	}
 
-	function addHoitaja($name,$kuvaus,$file){
-		$id = uniqid();
-
-		$hoitajat = simplexml_load_file('xml/hoitajat.xml');
-
-		$hoitaja = $hoitajat->addChild("hoitaja");
-		$hoitaja->addAttribute('id', $id);
-		$hoitaja->addChild('name',$name);
-		$hoitaja->addChild('kuvaus',$kuvaus);
-
-		// TODO add the upload image function
-		if (isset($file))
-			$hoitaja->addChild('imagesrc','baba.jpg');
-		else
-			$hoitaja->addChild('imagesrc','images/profile/to.jpg');
-
-		$content = $hoitajat->asXml();
-		file_put_contents("xml/hoitajat.xml", $content);
-
-	}
-
-	// TODO implement image upload here...
-	function updateHoitaja($id,$name,$kuvaus,$file){
-		$xml = simplexml_load_file('xml/hoitajat.xml');
-
-		foreach($xml->hoitaja as $found){ 
-			if ($found["id"] == $id){
-				$found->name = $name;
-				$found->kuvaus = $kuvaus;
-			}
-		}
-
-		$content = $xml->asXml();
-
-		file_put_contents("xml/hoitajat.xml", $content);
-	}
-
-	function deleteHoitaja($id){
-		$xml = simplexml_load_file('xml/hoitajat.xml');
-
-		foreach($xml->hoitaja as $found){ 
-			if ($found["id"] == $id){
-				$dom = dom_import_simplexml($found);
-				$dom->parentNode->removeChild($dom); 
-			}
-		}
-
-		$content = $xml->asXml();
-
-		file_put_contents("xml/hoitajat.xml", $content);
-	}
-
 	// palvelu functions
-	function listPalvelus(){
+	function listPalvelus() {
 		$xml = simplexml_load_file('xml/palvelut.xml');
 
-		foreach($xml->kategoria as $k)
-		{ 
-			echo "<h2>" . $k["name"] . "</h2>";
+		foreach($xml->kategoria as $category) { 
+			echo '<h2>' . $k['name'] . '</h2>';
+
 			$nappiId = $k["id"];
-		    foreach($k->palvelu as $p)
-		    {
-		    	echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input><input type="hidden" name="action" value="update"> </input><input type="hidden" name="id" value="'. $p["id"] .'"></input><input type="hidden" name="nappiid" value="'. $nappiId .'"></input><input type="field" name="palvelu" value="'. $p["nimi"] .'"></input><input type="field" name="kuvaus" value="'. $p->kuvaus .'"></input><input type="field" name="hinta" value="'. $p->hinta .'"></input><input type="field" name="hoitaja" value="'. $p->hoitajat .'"></input><input type="submit" value="Päivitä"></input></form> </br>';
-		    	echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input> <input type="hidden" name="id" value="'. $p["id"] .'"> </input><input type="hidden" name="nappiid" value="'. $nappiId .'"></input><input type="hidden" name="action" value="delete"></input><input type="submit" value="Poista"></input></form>';
-		    }
-		    echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input><input type="hidden" name="action" value="add"> <input type="hidden" name="nappiid" value="'. $nappiId .'"</input><input type="field" name="palvelu" placeholder="Palvelun nimi"></input><input type="field" name="kuvaus" placeholder="Palvelun kuvaus"></input><input type="field" name="hinta" placeholder="Palvelun hinta"></input><input type="field" name="hoitaja" placeholder="Palvelun hoitaja"><input type="submit" value="Lisää"></input></form> </br>';
+		  foreach($k->palvelu as $p) {
+	    	echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input><input type="hidden" name="action" value="update"> </input><input type="hidden" name="id" value="'. $p["id"] .'"></input><input type="hidden" name="nappiid" value="'. $nappiId .'"></input><input type="field" name="palvelu" value="'. $p["nimi"] .'"></input><input type="field" name="kuvaus" value="'. $p->kuvaus .'"></input><input type="field" name="hinta" value="'. $p->hinta .'"></input><input type="field" name="hoitaja" value="'. $p->hoitajat .'"></input><input type="submit" value="Päivitä"></input></form> </br>';
+	    	echo '<form method="POST" action="" ><input type="hidden" name="section" value="palvelu"> </input> <input type="hidden" name="id" value="'. $p["id"] .'"> </input><input type="hidden" name="nappiid" value="'. $nappiId .'"></input><input type="hidden" name="action" value="delete"></input><input type="submit" value="Poista"></input></form>';
+	    }
 	 	}
-	}
-
-	function addPalvelu($nappiId, $nimi, $kuvaus, $hinta, $hoitaja) {
-		$id = uniqid();
-
-		$kategoriat = simplexml_load_file('xml/palvelut.xml');
-		foreach($kategoriat->kategoria as $kfound)
-		{
-			if($kfound["id"] == $nappiId)
-			{
-				$palvelu = $kfound->addChild("palvelu");
-				$palvelu->addAttribute('nimi', $nimi);
-				$palvelu->addAttribute('id', $id);
-				$palvelu->addChild('kuvaus',$kuvaus);
-				$palvelu->addChild('hinta',$hinta);
-				$palvelu->addChild('hoitajat',$hoitaja);
-
-
-				$content = $kategoriat->asXml();
-				file_put_contents("xml/palvelut.xml", $content);
-			}
-		}
-	}
-
-	function updatePalvelu($id,$nappiId,$nimi,$kuvaus,$hinta,$hoitaja){
-		$kategoriat = simplexml_load_file('xml/palvelut.xml');
-		foreach($kategoriat->kategoria as $kfound)
-		{
-			if($kfound["id"] == $nappiId)
-			{
-				foreach($kfound->palvelu as $pfound)
-				{
-					if($pfound["id"] == $id)
-					{
-						$pfound["nimi"] = $nimi;
-						$pfound->kuvaus = $kuvaus;
-						$pfound->hinta = $hinta;
-						$pfound->hoitajat = $hoitaja;
-					}
-				}
-
-			}
-		}
-
-		$content = $kategoriat->asXml();
-		file_put_contents("xml/palvelut.xml", $content);
-	}
-
-	function deletePalvelu($nappiId,$id){
-		$xml = simplexml_load_file('xml/tapahtumat.xml');
-
-		foreach($xml->kategoria as $kfound){ 
-			if ($kfound["id"] == $nappiId){
-				foreach($kid->palvelu as $pfound)
-				{
-					if ($pfound["id"] == $id)
-					{
-						$dom = dom_import_simplexml($found);
-						$dom->parentNode->removeChild($dom); 
-					}
-				}
-			}
-		}
-
-		$content = $xml->asXml();
-
-		file_put_contents("xml/palvelut.xml", $content);
 	}
 
     // Tapahtuma functions
@@ -288,50 +96,5 @@
 	 	}
 
 	 	echo '<form method="POST" action="" ><input type="hidden" name="section" value="tapahtuma"> </input><input type="hidden" name="action" value="add"> </input><input type="field" name="title"></input><input type="field" name="content"></input><input type="submit" value="Lisää"></input></form> </br>';
-	}
-
-	function addTapahtuma($title,$description){
-		$id = uniqid();
-
-		$tapahtumat = simplexml_load_file('xml/tapahtumat.xml');
-
-		$tapahtuma = $tapahtumat->addChild("tapahtuma");
-		$tapahtuma->addAttribute('id', $id);
-		$tapahtuma->addChild('title',$title);
-		$tapahtuma->addChild('content',$description);
-
-		$content = $tapahtumat->asXml();
-		file_put_contents("xml/tapahtumat.xml", $content);
-
-	}
-
-	function updateTapahtuma($id,$title,$content){
-		$xml = simplexml_load_file('xml/tapahtumat.xml');
-
-		foreach($xml->tapahtuma as $found){ 
-			if ($found["id"] == $id){
-				$found->title = $title;
-				$found->content = $content;
-			}
-		}
-
-		$content = $xml->asXml();
-
-		file_put_contents("xml/tapahtumat.xml", $content);
-	}
-
-	function deleteTapahtuma($id){
-		$xml = simplexml_load_file('xml/tapahtumat.xml');
-
-		foreach($xml->tapahtuma as $found){ 
-			if ($found["id"] == $id){
-				$dom = dom_import_simplexml($found);
-				$dom->parentNode->removeChild($dom); 
-			}
-		}
-
-		$content = $xml->asXml();
-
-		file_put_contents("xml/tapahtumat.xml", $content);
 	}
 ?>
