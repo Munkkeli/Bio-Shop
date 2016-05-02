@@ -6,59 +6,103 @@ block styles
 block content
     - include 'php/tables.php'
 
+    .navbar.navbar-default.navbar-fixed-top
+      .container.container-fluid
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar',
+          aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Bio-Shop
+
+        #navbar.navbar-collapse.collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='#') Tietoa meistä
+            li
+              a(href='#') Palvelut
+            li
+              a(href='#') Henkilökunta
+            li
+              a(href='#') Hinnasto
+            li
+              a(href='#') Ota yhteyttä
+            li.icon
+              a(href='https://www.facebook.com/Ikinuori')
+                i.mdi.mdi-facebook-box
+
     div.jumbotron.text-center
-        img(src='images/zen-logo-hd.png' style='width:30%;height:30%')
-        p Terveyskauppa Bioshop Ikinuori
+      img(src='images/zen-logo-hd.png')
+      p Terveyskauppa Bioshop Ikinuori
 
     #tietoa.container-fluid.bg-grey
-        div.row
-            div.col-sm-8
-                h2 Bio-Shop Ikinuori
-                p.
-                    Bio-Shop Ikinuori on avara ja monipuolinen terveyskauppa,
-                    joka sijaitsee Tikkurilan Kielotiellä. Olemme toimineet samassa paikassa jo miltei 20 vuotta. Liikkeestämme löytyy laaja valikoima eri luontaistuotteita ja tarjoamme samalla asiantuntevaa palvelua. Kuulumme laajaan ja tunnettuun Luontaistuntijat-ketjuun.
-                    Liikkeen yhteydessä toimii myös Bio-Center-hoitola, josta saa monenlaisia hoitopalveluja.
+      div.row
+        div.col-sm-1
 
-                p Aukioloajat: 
-                |MA-PE 9.30-18.00 
-                |LA 10-15.00
-            div.col-sm-4
-                img(src='images/logo.png')
-                div.video-container
-                    iframe(width='540' height='295' src='https://www.youtube.com/embed/rn-CpOl24-0' frameborder='0')
+        div.col-sm-6
+          h2 Bio-Shop Ikinuori
+          p.
+            Bio-Shop Ikinuori on avara ja monipuolinen terveyskauppa,
+            joka sijaitsee Tikkurilan Kielotiellä. Olemme toimineet samassa paikassa jo miltei 20 vuotta. Liikkeestämme löytyy laaja valikoima eri luontaistuotteita ja tarjoamme samalla asiantuntevaa palvelua. Kuulumme laajaan ja tunnettuun Luontaistuntijat-ketjuun.
+            Liikkeen yhteydessä toimii myös Bio-Center-hoitola, josta saa monenlaisia hoitopalveluja.
+
+          p Aukioloajat: 
+          |MA-PE 9.30-18.00 
+          |LA 10-15.00
+
+        div.col-sm-4
+          img(src='images/logo.png')
+          div.video-container
+            iframe(src='https://www.youtube.com/embed/rn-CpOl24-0' frameborder='0')
+
+        div.col-sm-1
 
     #palvelut.container-fluid.text-center.bg-grey
         h2 Palvelut
 
         div.row
-            div.col-sm-3
+          div.col-sm-1
+
+          div.col-sm-10
+            div.row
+              div.col-sm-3
                 button.btn.btn-success.btn-block.btn-lg
-                    h4 testi
-            div.col-sm-3
+                  h4 testi
+
+              div.col-sm-3
                 button.btn.btn-success.btn-block.btn-lg
-                    h4 testi
-            div.col-sm-3
+                  h4 testi
+
+              div.col-sm-3
                 button.btn.btn-success.btn-block.btn-lg
-                    h4 testi
-            div.col-sm-3
+                  h4 testi
+
+              div.col-sm-3
                 button.btn.btn-success.btn-block.btn-lg
-                    h4 testi
-            div.col-sm-3
+                  h4 testi
+
+              div.col-sm-3
                 button.btn.btn-success.btn-block.btn-lg
-                    h4 testi
-            div.col-sm-3
+                  h4 testi
+
+              div.col-sm-3
                 button.btn.btn-success.btn-block.btn-lg
-                    h4 testi
-            div.col-sm-3
-                button.btn.btn-success.btn-block.btn-lg
-                    h4 testi
+                  h4 testi
+
+          div.col-sm-1
 
     #tapahtumat.container-fluid.bg-grey
-        h2 TAPAHTUMAT
-        - $tapahtumat = Tapahtuma::show();
-        - for ($x = 0; $x < $tapahtumat->count(); $x++):
-            div.col-sm-12!= $tapahtumat[$x]->nimi;
-        - endfor
+      div.row
+        div.col-sm-1
+        div.col-sm-10
+          h2 TAPAHTUMAT
+          - $tapahtumat = Tapahtuma::show();
+          - for ($x = 0; $x < $tapahtumat->count(); $x++):
+              div.col-sm-12!= $tapahtumat[$x]->nimi;
+          - endfor
+        div.col-sm-1
 
 
         div.row.text-left

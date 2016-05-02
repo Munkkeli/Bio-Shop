@@ -8,29 +8,10 @@ html
 
   link(rel='stylesheet', type='text/css', href='css/plugins.min.css')
   link(rel='stylesheet', type='text/css', href='css/style.min.css')
+  script(type='text/javascript', src='js/plugins.min.js')
   block styles
 
   body
-    nav.navbar.navbar-default.navbar-fixed-top
-      .container
-        a.navbar-brand(href='/') Bio-Shop
-        ul.nav.navbar-nav.navbar-right
-          li
-            a(href='#') Tietoa meistä
-          li
-            a(href='#') Palvelut
-          li
-            a(href='#') Henkilökunta
-          li
-            a(href='#') Hinnasto
-          li
-            a(href='#') Ota yhteyttä
-          li.icon
-            a(href='https://www.facebook.com/Ikinuori')
-              i.mdi.mdi-facebook-box
-
     block content
 
-  script(type='text/javascript', src='js/plugins.min.js')
-  block scripts
-
+    block scripts
