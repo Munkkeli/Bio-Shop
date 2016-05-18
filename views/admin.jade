@@ -7,7 +7,7 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
 
     link(rel='stylesheet', type='text/css', href='css/plugins.min.css')
-    link(rel='stylesheet', type='text/css', href='css/style.min.css')
+    link(rel='stylesheet', type='text/css', href='css/admin.min.css')
     link(rel='stylesheet', tpye='text/css', href='css/simple-sidebar.min.css')
 
   
@@ -36,15 +36,30 @@ body
                 div.row
                     div.col-lg-12
                         h1 Palveluiden muokkauspaneeli
+                        h2 Muokkaa olemassaolevia palveluita
+                            i.mdi.mdi-pencil
                         - echo Palvelu::form('update');
+                        hr
+                        h2 Lisää uusi palvelu
+                            i.mdi.mdi-file
                         - echo Palvelu::form('create');
 
                         h1 Tapahtumien muokkauspaneeli
+                        h2 Muokkaa olemassaolevia tapahtumia
+                            i.mdi.mdi-pencil
                         - echo Tapahtuma::form('update');
+                        hr
+                        h2 Lisää uusi tapahtuma
+                            i.mdi.mdi-file
                         - echo Tapahtuma::form('create');
 
-                        h1 Hoitajien muokkauspaneeli   
+                        h1 Hoitajien muokkauspaneeli
+                        h2 Muokkaa olemassaolevia hoitajia
+                            i.mdi.mdi-pencil
                         - echo Hoitaja::form('update');
+                        hr
+                        h2 Lisää uusi hoitaja
+                            i.mdi.mdi-file
                         - echo Hoitaja::form('create');
 
 

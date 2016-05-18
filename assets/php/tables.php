@@ -12,25 +12,25 @@
       switch ($action) {
         case 'create':
         default:
-          return form($action, static::$schema, [], 'Luo ' . static::$single);
+          return '<div class="form">' . form($action, static::$schema, [], 'Luo ' . static::$single) . '</div>';
 
         case 'update':
           $data = self::get();
           if (empty($data)) return;
-          $data = $data->{static::$single};
+          $data = $data->{ static::$single };
 
           if ($data->count() <= 0) return;
 
           if ($data->count() == 1) {
-            $final = form($action, static::$schema, $data, 'Päivitä');
-            $final .= form('delete', static::$schema, $data, 'Poista');
+            $final = '<div class="form">' . form($action, static::$schema, $data, 'Päivitä');
+            $final .= form('delete', static::$schema, $data, 'Poista') . '</div>';
             return $final;
           }
           
           $final = '';
           for ($x = 0; $x < $data->count(); $x++) {
-            $final .= form($action, static::$schema, $data[$x], 'Päivitä');
-            $final .= form('delete', static::$schema, $data[$x], 'Poista');
+            $final .= '<div class="form">' . form($action, static::$schema, $data[$x], 'Päivitä');
+            $final .= form('delete', static::$schema, $data[$x], 'Poista') . '</div>';
           }
           return $final;
       }
@@ -43,7 +43,7 @@
     public static function show() {
       $data = self::get();
       if (empty($data)) return [];
-      return $data->{static::$single};
+      return $data->{ static::$single };
     }
 
     public static function update($data, $multi = false) {

@@ -1,0 +1,78 @@
+h1:not(:first-child) {
+  margin-top: 80px;
+}
+
+h2 {
+  font-size: 1.8em;
+  color: #666;
+
+  i {
+    margin: 0 0 0 10px;
+  }
+}
+
+hr {
+  display: block;
+  height: 1px;
+  margin: 40px 0 20px 0;
+  background: #333;
+  border: none;
+}
+
+.form {
+  display: block;
+
+  form {
+    display: inline-block;
+  }
+
+  .input {
+    display: block;
+    float: left;
+    margin: 20px 20px 0 0;
+    max-width: 200px;
+  }
+
+  label {
+    display: block;
+    position: relative;
+    text-transform: capitalize;
+  }
+
+  textarea, input {
+    display: block;
+    padding: 0 6px;
+    width: 200px;
+    height: 28px;
+    font-size: 16px;
+    border: 2px solid #333;
+    outline: none;
+
+    box-sizing: border-box;
+  }
+
+  textarea {
+    height: 72px;
+  }
+
+  button {
+    display: inline-block;
+    margin: 45px 20px 0 0;
+    padding: 0 12px;
+    height: 28px;
+    background: #333;
+    outline: none;
+    border: 2px solid #333;
+    //border-radius: 5px;
+    color: #eee;
+
+    &:hover {
+      background: #555;
+    }
+
+    &:active {
+      background: #eee;
+      color: #333;
+    }
+  }
+}

@@ -69,9 +69,14 @@
     file_put_contents(__DIR__ . $store, $xml->asXML());
   }
 
+  // Add contents to a div
+  function div($content, $class = '') {
+    return '<div class="' . $class . '">' . $content .'</div>';
+  }
+
   // Create a HTML form from schema
   function form($action, $schema, $data = [], $text = 'Lähetä') {
-    $final = "<form method='post' action='" . $GLOBALS['prefix'] ."/router.php'>";
+    $final = "<form method='post' action='" . $GLOBALS['prefix'] ."/router.php' class='" . $action . "'>";
     $final .= "<input id='_action' name='_action' type='hidden' value='$action'></input>";
 
     if ($action == 'delete') {
@@ -92,15 +97,15 @@
       switch ($type) {
         case 'text':
         default:
-          $final .= "<label for='$key'>$key</label><input id='$key' name='$key' type='text' value='$value'></input>";
+          $final .= div("<label for='$key'>$key</label><input id='$key' name='$key' type='text' value='$value'></input>", 'input');
           break;
         
         case 'description':
-          $final .= "<label for='$key'>$key</label><textarea id='$key' name='$key'>$value</textarea>";
+          $final .= div("<label for='$key'>$key</label><textarea id='$key' name='$key'>$value</textarea>", 'input');
           break;
 
         case 'number':
-          $final .= "<label for='$key'>$key</label><input id='$key' name='$key' type='number' value='$value'></input>";
+          $final .= div("<label for='$key'>$key</label><input id='$key' name='$key' type='number' value='$value'></input>", 'input');
           break;
 
         case 'hidden':
