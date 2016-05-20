@@ -105,7 +105,7 @@
           break;
 
         case 'number':
-          $final .= div("<label for='$key'>$key</label><input id='$key' name='$key' type='number' value='$value'></input>", 'input');
+          $final .= div("<label for='$key'>$key</label><input id='$key' name='$key' type='number' step='0.01' value='$value'></input>", 'input');
           break;
 
         case 'hidden':
@@ -117,4 +117,48 @@
     return $final . "<button name='submit' type='submit'>$text</button></form>";
   }
 
+  function modal($id, $title, $data, $filter = null) {
+    $final = "<div id='$id' class='modal fade' role='dialog'><div class='modal-dialog'><div class='modal-content'>";
+
+    $final .= "<div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'>$title</h4></div>";
+
+    $final .= "<div class='modal-body'><table class='table'>";
+
+    for ($x = 0; $x < ($data == null ? 0 : $data->count()); $x++) {
+      if ($x == 0) {
+        $final .= "<tr>";
+        foreach ($data[$x] as $key => $value) {
+          if ($key == 'id' || $key == 'kategoria' || $key == 'kuvaus') continue;
+          $final .= "<th>$key</th>";
+        }
+
+        $final .= "<th></th>";
+
+        $final .= "</tr>";
+      }
+
+      if ($filter != null && $data[$x]->kategoria != $filter) continue;
+
+      $final .= "<tr>";
+
+      foreach ($data[$x] as $key => $value) {
+        if ($key == 'id' || $key == 'kategoria' || $key == 'kuvaus') continue;
+        $final .= "<td>$value</td>";
+      }
+
+      $final .= "<td><a href='#'>Lisätiedot</a></td>";
+
+      $final .= "</tr>";
+    }
+
+    $final .= "</table></div>";
+
+    $final .= "<div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>Sulje</button></div>";
+
+    return $final . "</div></div></div>";
+  }
+
+  function toKebabCase($value) {
+    return preg_replace('/[^a-ö0-9-]+/', '', implode('-', explode(' ', strtolower($value))));
+  }
 ?>

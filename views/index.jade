@@ -59,57 +59,59 @@ block content
 
         div.col-sm-1
 
-    #palvelut.container-fluid.text-center.bg-grey
-        h2 Palvelut
+    #palvelut.container-fluid.bg-grey
+      div.row
+        div.col-sm-1
 
-        div.row
-          div.col-sm-1
+        div.col-sm-10
+          h2 Palvelut
 
-          div.col-sm-10
-            div.row
-              div.col-sm-3
-                button.btn.btn-success.btn-block.btn-lg
-                  h4 testi
+          div.row
+            - $palvelut = Palvelu::show();
+            - $kategoriat = [];
+            - for ($x = 0; $x < ($palvelut == null ? 0 : $palvelut->count()); $x++):
+              - if (!in_array($palvelut[$x]->kategoria, $kategoriat)):
+                - array_push($kategoriat, $palvelut[$x]->kategoria->__toString());
+                - $id = '#modal-' . toKebabCase($palvelut[$x]->kategoria->__toString());
+                  div.col-sm-3
+                    button.btn.btn-success.btn-block.btn-lg(data-toggle='modal', data-target!= $id)
+                      h4!= $palvelut[$x]->kategoria;
+              - endif;
+            - endfor
 
-              div.col-sm-3
-                button.btn.btn-success.btn-block.btn-lg
-                  h4 testi
+            - foreach ($kategoriat as $kategoria):
+              .modal-container!= modal('modal-' . toKebabCase($kategoria), $kategoria, Palvelu::show(), $kategoria);
+            - endforeach;
 
-              div.col-sm-3
-                button.btn.btn-success.btn-block.btn-lg
-                  h4 testi
-
-              div.col-sm-3
-                button.btn.btn-success.btn-block.btn-lg
-                  h4 testi
-
-              div.col-sm-3
-                button.btn.btn-success.btn-block.btn-lg
-                  h4 testi
-
-              div.col-sm-3
-                button.btn.btn-success.btn-block.btn-lg
-                  h4 testi
-
-          div.col-sm-1
+        div.col-sm-1
 
     #tapahtumat.container-fluid.bg-grey
       div.row
         div.col-sm-1
+
         div.col-sm-10
-          h2 TAPAHTUMAT
+          h2 Tapahtumat
+
           - $tapahtumat = Tapahtuma::show();
-          - for ($x = 0; $x < $tapahtumat->count(); $x++):
+          - for ($x = 0; $x < ($tapahtumat == null ? 0 : $tapahtumat->count()); $x++):
               div.col-sm-12!= $tapahtumat[$x]->nimi;
           - endfor
+
         div.col-sm-1
 
 
         div.row.text-left
 
     #hoitajat.container-fluid.bg-grey
-        h2 HOITAJAT
-        - $hoitajat = Hoitaja::show();
-        - for ($x = 0; $x < $hoitajat->count(); $x++):
-            div.col-sm-1!= $hoitajat[$x]->nimi;
-        - endfor
+      div.row
+        div.col-sm-1
+
+        div.col-sm-10
+          h2 Hoitajat
+
+          - $hoitajat = Hoitaja::show();
+          - for ($x = 0; $x < ($hoitajat == null ? 0 : $hoitajat->count()); $x++):
+              div.col-sm-1!= $hoitajat[$x]->nimi;
+          - endfor
+
+        div.col-sm-1

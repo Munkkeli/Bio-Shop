@@ -42,7 +42,7 @@
 
     public static function show() {
       $data = self::get();
-      if (empty($data)) return [];
+      if (empty($data)) return null;
       return $data->{ static::$single };
     }
 
@@ -84,8 +84,9 @@
     public static $schema = [
       'id' => 'hidden',
       'nimi' => 'text',
+      'kategoria' => 'text',
       'kuvaus' => 'description',
-      'hinta' => 'number',
+      'hinta' => 'text',
       'hoitaja' => 'text',
 
       '_type' => 'palvelu'
